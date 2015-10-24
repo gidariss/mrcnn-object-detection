@@ -1,0 +1,6 @@
+data/
+datasets
+external/caffe
+feat_cache
+models-exps
+*~
