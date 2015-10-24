@@ -1,3 +1,5 @@
+## *Object detection via a multi-region & semantic segmentation-aware CNN model*
+
 This code implements the following ICCV2015 accepted paper:  
 Title: "Object detection via a multi-region & semantic segmentation-aware CNN model"  
 Authors: Spyros Gidaris, Nikos Komodakis  
