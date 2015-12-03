@@ -47,8 +47,8 @@ cd(pool_def_dir);
 pool_params = eval(pool_def_file);
 cd(cur_dir);
 
-pool_params.context_inner   = opts.context_inner;
-pool_params.context_outer   = opts.context_outer;
-pool_params.half_bbox       = opts.half_bbox;
-pool_params.feat_id         = opts.feat_id;
+pool_params.scale_inner = opts.scale_inner;
+pool_params.scale_outer = opts.scale_outer;
+pool_params.half_bbox   = opts.half_bbox;
+pool_params.feat_id     = opts.feat_id;
 end

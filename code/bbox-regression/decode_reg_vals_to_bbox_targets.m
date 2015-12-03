@@ -13,6 +13,17 @@ function bbox_pred = decode_reg_vals_to_bbox_targets(bbox_init, reg_values)
 % this file (or any portion of it) in your project.
 % ---------------------------------------------------------
 
+bbox_pred   = zeros(size(reg_values), 'like', reg_values);
+num_classes = size(bbox_pred,2) / 4;
+for c = 1:num_classes
+    reg_values_this              = reg_values(:,(c-1)*4 + (1:4));
+    bbox_pred(:,(c-1)*4 + (1:4)) = decode_reg_values(bbox_init, reg_values_this);
+end
+end
+
+function bbox_pred = decode_reg_values(bbox_init, reg_values)
+
+
 dst_ctr_x = reg_values(:,1);
 dst_ctr_y = reg_values(:,2);
 dst_scl_x = reg_values(:,3);
