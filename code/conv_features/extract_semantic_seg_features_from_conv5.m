@@ -35,7 +35,7 @@ for i = 1:num_inputs
     response{1} = postprocess_output(response{1}, interleave_num_steps);
     rsp{i}      = permute(response{1}, [2, 1, 3]);
 end
-
+rsp = rsp(:);
 end
 
 function input = preprocess_input(input, interleave_num_steps)

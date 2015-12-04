@@ -18,8 +18,9 @@ function script_test_object_detection_iter_loc(model_rec_dir_name, model_loc_dir
 
 %****************************** OPTIONS ***********************************
 ip = inputParser;
-ip.addParamValue('gpu_id', 0,        @isscalar);
-ip.addParamValue('feat_cache_names', {'VGG_ILSVRC_16_layers'}, @iscell);
+ip.addParamValue('gpu_id', 0,               @isscalar);
+ip.addParamValue('use_cached_feat',  true, @islogical);
+
 ip.addParamValue('image_set_test',        'test')
 ip.addParamValue('voc_year_test',         '2007')
 ip.addParamValue('proposals_method_test', 'edge_boxes');
@@ -91,11 +92,15 @@ all_bbox_gt_test      = image_db_test.all_bbox_gt;
 proposals_suffix_test = image_db_test.proposals_suffix;
 image_set_name_test   = image_db_test.image_set_name;
 
-if ~isempty(opts.feat_cache_names)
-    image_db_test      = load_feature_paths(image_db_test, opts.feat_cache_names);
-    feature_paths_test = image_db_test.feature_paths;
+if opts.use_cached_feat
+    image_db_test          = load_feature_paths(image_db_test, model_obj_rec.feat_cache);
+    feature_paths_test_rec = image_db_test.feature_paths;
+    image_db_test          = load_feature_paths(image_db_test, model_bbox_loc.feat_cache);
+    feature_paths_test_loc = image_db_test.feature_paths;  
+    image_db_test          = rmfield(image_db_test,'feature_paths');
 else
-    feature_paths_test = {};
+    feature_paths_test_rec = {};
+    feature_paths_test_loc = {};
 end
 % classes = image_db_test.classes;
 %**************************************************************************
@@ -139,7 +144,7 @@ catch exception
         model_obj_rec = load_object_recognition_model_on_caffe(...
             model_obj_rec, opts.use_detection_svms, model_phase_rec, full_model_rec_dir);
         abbox_det_cands{iter} = score_bboxes_all_imgs(...
-            model_obj_rec, image_paths_test, feature_paths_test, all_regions_test, ...
+            model_obj_rec, image_paths_test, feature_paths_test_rec, all_regions_test, ...
             dst_directory, image_set_name_test, 'all_bbox_gt', all_bbox_gt_test, ...
             'is_per_class', is_per_class, 'suffix', suffix_this_iter);        
         caffe.reset_all();
@@ -157,7 +162,7 @@ catch exception
         %***************************** REFINE BBOXES **************************
         model_bbox_loc = load_bbox_loc_model_on_caffe(model_bbox_loc, full_model_loc_dir);
         abbox_det_cands{iter} = regress_bboxes_all_imgs(...
-            model_bbox_loc, image_paths_test, feature_paths_test, abbox_det_cands{iter}, ...
+            model_bbox_loc, image_paths_test, feature_paths_test_loc, abbox_det_cands{iter}, ...
             dst_directory, image_set_name_test, 'all_bbox_gt', all_bbox_gt_test, ...
             'is_per_class', is_per_class, 'suffix', suffix_this_iter);                
         caffe.reset_all();
