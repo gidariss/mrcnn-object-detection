@@ -16,7 +16,7 @@ ip.addParamValue('proposals_method_val', {'selective_search'});
 ip.addParamValue('val_use_flips',         false, @islogical);
 
 ip.addParamValue('vgg_pool_params_def',   fullfile(pwd,'data/vgg_pretrained_models/vgg_region_config.m'), @ischar); 
-ip.addParamValue('net_file',              fullfile(pwd,'data/vgg_pretrained_models/VGG_ILSVRC_16_layers_Scaled05.caffemodel'), @ischar);
+ip.addParamValue('net_file',              fullfile(pwd,'data/vgg_pretrained_models/VGG_ILSVRC_16_Fully_Connected_Layers.caffemodel'), @ischar);
 ip.addParamValue('finetune_net_def_file',  'VGG16_Region_Adaptation_Module_train_test_solver.prototxt', @ischar);
 ip.addParamValue('solverstate',  '', @ischar)
 
