@@ -43,21 +43,14 @@ if length(feat) == 1
         [pool_feat{p}, regions{p}] = convFeat_to_poolFeat(pooler(p), feat, boxes, random_scale);
     end
 else
-    if isfield(pooler, 'feat_id')
+    if iscell(feat)
+        for p = 1:num_poolX 
+            [pool_feat{p}, regions{p}]  = convFeat_to_poolFeat(pooler(p), feat{pooler(p).feat_id}, boxes, random_scale);
+        end         
+    elseif isstruct(feat)
         for p = 1:num_poolX 
             [pool_feat{p}, regions{p}]  = convFeat_to_poolFeat(pooler(p), feat(pooler(p).feat_id), boxes, random_scale);
-        end
-    else
-        assert(length(feat) == num_poolX);
-        if iscell(feat)
-            for p = 1:num_poolX 
-                [pool_feat{p}, regions{p}] = convFeat_to_poolFeat(pooler(p), feat{p}, boxes, random_scale);
-            end
-        elseif isstruct(feat)
-            for p = 1:num_poolX 
-                [pool_feat{p}, regions{p}] = convFeat_to_poolFeat(pooler(p), feat(p), boxes, random_scale);
-            end
-        end
+        end        
     end
 end
 end

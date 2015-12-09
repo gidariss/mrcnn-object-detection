@@ -67,6 +67,11 @@ end
 opts.finetune_net_def_file = fullfile(opts.finetune_rst_dir, solver_file);
 assert(exist(opts.finetune_net_def_file,'file')>0)
 
+voc_path      = [pwd, '/datasets/VOC%s/'];
+voc_path_year = sprintf(voc_path, '2007');
+VOCopts       = initVOCOpts(voc_path_year,'2007');
+classes       = VOCopts.classes;
+
 data_param = struct;
 data_param.img_num_per_iter = 128; % should be same with the prototxt file
 data_param.random_scale     = 1;
@@ -106,32 +111,30 @@ else
 end
 
 assert(exist(finetuned_model_path,'file')>0);
+[~,filename,ext]   = fileparts(finetuned_model_path);
+finetuned_model_path = ['.',filesep,filename,ext];
 
-deploy_net_file        = 'deploy_softmax.prototxt';
-model_net_def_file     = fullfile(opts.finetune_rst_dir, deploy_net_file);
+
 feat_blob_name         = {'fc7'};
-VOCopts                = initVOCOpts( '/home/spyros/Documents/projects/VOC2007/VOCdevkit', '2007');
 
 model                  = struct;
-model.net_def_file     = model_net_def_file;
+model.net_def_file     = './deploy_softmax.prototxt';
 model.net_weights_file = {finetuned_model_path};
 model.pooler           = pooler;
 model.feat_blob_name   = feat_blob_name;
 model.feat_cache       = opts.feat_cache_names;
-model.classes          = VOCopts.classes;
+model.classes          = classes;
 model.score_out_blob   = 'fc8_pascal';
 model_filename         = fullfile(opts.finetune_rst_dir, 'detection_model_softmax.mat');
 save(model_filename, 'model');
 
-deploy_net_file        = 'deploy_svm.prototxt';
-model_net_def_file     = fullfile(opts.finetune_rst_dir, deploy_net_file);
 model                  = struct;
-model.net_def_file     = model_net_def_file;
+model.net_def_file     = './deploy_svm.prototxt';
 model.net_weights_file = {finetuned_model_path};
 model.pooler           = pooler;
 model.feat_blob_name   = feat_blob_name;
 model.feat_cache       = opts.feat_cache_names;
-model.classes          = VOCopts.classes;
+model.classes          = classes;
 model.score_out_blob   = 'pascal_svm';
 model_filename         = fullfile(opts.finetune_rst_dir, 'detection_model_svm.mat');
 save(model_filename, 'model');

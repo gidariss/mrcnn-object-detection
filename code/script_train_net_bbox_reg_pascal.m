@@ -50,8 +50,6 @@ opts.finetune_rst_dir       = fullfile(pwd, 'models-exps', model_dir_name);
 opts.finetune_net_def_file  = fullfile(pwd, 'model-defs', opts.finetune_net_def_file);
 mkdir_if_missing(opts.finetune_rst_dir);
 
-% opts.net_file = '/home/spyros/Documents/projects/mrcnn-object-detection/models-exps/vgg_bbox_reg_R0013_voc2012_2007/best_model_iter_234000.caffemodel';
-
 disp(opts)
 if ~opts.save_mat_model_only
     image_db_train = load_image_dataset(...
@@ -76,6 +74,11 @@ end
 opts.finetune_net_def_file = fullfile(opts.finetune_rst_dir, solver_file);
 assert(exist(opts.finetune_net_def_file,'file')>0)
 assert(exist(opts.net_file,'file')>0)
+
+voc_path      = [pwd, '/datasets/VOC%s/'];
+voc_path_year = sprintf(voc_path, '2007');
+VOCopts       = initVOCOpts(voc_path_year,'2007');
+classes       = VOCopts.classes;
 
 data_param                   = struct;
 data_param.img_num_per_iter  = 128; 
@@ -114,19 +117,18 @@ else
 end
 
 assert(exist(finetuned_model_path,'file')>0);
+[~,filename,ext]   = fileparts(finetuned_model_path);
+finetuned_model_path = ['.',filesep,filename,ext];
 
-deploy_net_file        = 'deploy_regression.prototxt';
-model_net_def_file     = fullfile(opts.finetune_rst_dir, deploy_net_file);
 feat_blob_name         = {'fc7'};
-VOCopts                = initVOCOpts( '/home/spyros/Documents/projects/VOC2007/VOCdevkit', '2007');
 
 model                  = struct;
-model.net_def_file     = model_net_def_file;
+model.net_def_file     = './deploy_regression.prototxt';
 model.net_weights_file = {finetuned_model_path};
 model.pooler           = pooler;
 model.feat_blob_name   = feat_blob_name;
 model.feat_cache       = opts.feat_cache_names;
-model.classes          = VOCopts.classes;
+model.classes          = classes;
 model_filename         = fullfile(opts.finetune_rst_dir, 'regression_model.mat');
 save(model_filename, 'model');
 end
