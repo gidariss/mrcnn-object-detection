@@ -3,6 +3,7 @@
 ###################################################################
 
 Introduction:
+
 This code implements the following ICCV2015 accepted paper:  
 Title: "Object detection via a multi-region & semantic segmentation-aware CNN model"  
 Authors: Spyros Gidaris, Nikos Komodakis  
@@ -30,7 +31,9 @@ This code is released under the MIT License (refer to the LICENSE file for detai
 ###################################################################
 
 Requirements:  
+
 -- Software: 
+
 1) MATLAB (tested with R2014b)
 2) Caffe: https://github.com/BVLC/caffe
 3) LIBLINEAR (only for training)  
@@ -45,6 +48,7 @@ Requirements:
 ###################################################################
 
 Installation:
+
 1. Install CAFFE https://github.com/BVLC/caffe
 2. Place a soft link to caffe directory on {path-to-mrcnn-object-detection}/external/caffe  
 3. Place the VGG16 model pre-trained on ImageNet for the Image Classification task on:
@@ -70,7 +74,8 @@ If you will use the pre-trained object detection models then
 
 ###################################################################
 
-Testing the pre-trained models on VOC2007 test set:  
+Testing the pre-trained models on VOC2007 test set: 
+
 1. Pre-cache the VGG16 conv5 features of the images in VOC2007 test set (for the scales 480, 576, 688, 874, and 1200) by running on matlab:  
 script_extract_vgg16_conv_features('test', '2007', 'gpu_id', 1);   
 gpu_id is a one-based index; if a non positive value is given then the CPU will be used instead. It should take around 2-3 hours for the VOC2007 test set.  
