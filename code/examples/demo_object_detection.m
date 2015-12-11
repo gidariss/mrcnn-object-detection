@@ -56,11 +56,8 @@ function [ bbox_detections ] = demo_object_detection( img, model_obj_rec, conf )
 % Licensed under The MIT License [see LICENSE for details]
 % ---------------------------------------------------------
 
-% extract the activation maps of the image
-feat_data = get_conv_feat_data(model_obj_rec.act_maps_net, img, ...
-    model_obj_rec.scales, model_obj_rec.mean_pix);  
-
 % extract the edge box proposals of an image
+fprintf('Extracting bounding box proposals... '); th = tic;
 switch conf.box_method
     case 'edge_boxes'
         bbox_proposals = extract_edge_boxes_from_image(img);
@@ -73,17 +70,30 @@ end
 % row contains cordinates [x0, y0, x1, y1] of the i-th candidate box, where 
 % the (x0,y0) and (x1,y1) are coorindates of the top-left and 
 % bottom-right corners correspondingly. NB is the number of box proposals.
+fprintf(' %.3f sec\n', toc(th));
+
+
+% extract the activation maps of the image
+fprintf('Extracting the image actication maps... '); th = tic;
+feat_data = get_conv_feat_data(model_obj_rec.act_maps_net, img, ...
+    model_obj_rec.scales, model_obj_rec.mean_pix); 
+fprintf(' %.3f sec\n', toc(th));
 
 
 % score the bounding box proposals with the recognition model;
 % bboxes_scores will be a NB x C array, where NB is the number of box 
 % proposals and C is the number of categories.
+fprintf('scoring the bounding box proposals... '); th = tic;
 bboxes_scores   = scores_bboxes_img( model_obj_rec, feat_data.feat, bbox_proposals );
 bbox_cand_dets  = single([bbox_proposals(:,1:4), bboxes_scores]);
+fprintf(' %.3f sec\n', toc(th));
 
-max_per_image   = 100;
+
+max_per_image = 100;
+fprintf('applying the non-max-suppression step... '); th = tic;
 bbox_detections = postprocess_bboxes_scored(bbox_cand_dets, conf.thresh, ...
     conf.nms_over_thrs, max_per_image);
+fprintf(' %.3f sec\n', toc(th));
 
 end
 
@@ -119,7 +129,7 @@ function bbox_proposals = extract_edge_boxes_from_image(img)
 % the (x0,y0) and (x1,y1) are coorindates of the top-left and 
 % bottom-right corners correspondingly.
 
-edge_boxes_path = '../edges';
+edge_boxes_path = fullfile(pwd, 'external', 'edges');
 model=load(fullfile(edge_boxes_path,'models/forest/modelBsds')); 
 model=model.model;
 model.opts.multiscale=0; model.opts.sharpen=2; model.opts.nThreads=4;

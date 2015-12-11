@@ -11,6 +11,11 @@ else
     warning('The Edge Boxes installation directory "%s" is not valid. Please install the Edge boxes code (https://github.com/pdollar/edges) and set the path to its installation directory in the edge_boxes_path variable of the startup.m file if you want use the Edge Box proposals', edge_boxes_path)
 end
 
+edge_boxes_link_path = fullfile(curdir, 'external', 'edges');
+if exist(edge_boxes_link_path, 'dir') == 0
+    warning('A link to the edge box installation directory is missing from external/edges; See README.md');
+end
+
 % set to pdollar_toolbox_path the path where the Piotr's Matlab Toolbox 
 % (http://vision.ucsd.edu/~pdollar/toolbox/doc/index.html) is installed   
 pdollar_toolbox_path = '../pdollar-toolbox/';

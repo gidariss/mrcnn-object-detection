@@ -47,7 +47,7 @@ for i = 1:num_scales
     response = net.forward({img_scaled});
     rsp{i} = permute(response{1}, [2, 1, 3]);
 end
-fprintf('}')
+%fprintf('}')
 end
 
 function im_scaled_size = get_scaled_image_size(im_size, scale_sel)

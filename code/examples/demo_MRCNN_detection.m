@@ -51,11 +51,16 @@ model_obj_rec.act_maps_net = caffe_load_model( model_obj_rec.act_net_def_file, m
 %**************************************************************************
 
 img  = imread('./code/examples/images/fish-bike.jpg'); % load image
+category_names = model_obj_rec.classes; % a C x 1 cell array with the name 
+% of the categories that the detection system looks for. C is the numbe of
+% categories.
+num_categories = length(category_names);
+
 
 conf = struct;
 % the threholds that are being used for removing easy negatives before the
 % non-max-suppression step
-conf.thresh = -3 * ones(length(model_obj_rec.classes),1); % It contains the 
+conf.thresh = -3 * ones(num_categories,1); % It contains the 
 % threshold per category that will be used for removing scored boxes with 
 % low confidence prior to applying the non-max-suppression step.
 conf.nms_over_thrs = 0.3; % IoU threshold for the non-max-suppression step
@@ -66,28 +71,14 @@ conf.box_method = 'edge_boxes'; % string with the box proposals algorithm that
 % detect object in the image
 [ bbox_detections ] = demo_object_detection( img, model_obj_rec, conf );
 
+% visualize the bounding box detections.
+score_thresh = 0.0 * zeros(num_categories, 1); % score threshold per 
+% category for keeping or discarding a detection. For the purposes of this
+% demo we set the score thresholds to 0 value. However, this is not the
+% optimal value. Someone should tune those thresholds in order to achieve
+% the desired trade-off between precision and recall.
+display_bbox_detections( img, bbox_detections, score_thresh, category_names );
 
-score_thresh = -1.5;
 
-all_dets = [];
-for i = 1:length(bbox_detections)
-  all_dets = cat(1, all_dets, ...
-      [i * ones(size(bbox_detections{i}, 1), 1) bbox_detections{i}]);
-end
-
-[~, ord] = sort(all_dets(:,end), 'descend');
-for i = 1:length(ord)
-  score = all_dets(ord(i), end);
-  if score < score_thresh
-    break;
-  end
-  cls = model_obj_rec.classes{all_dets(ord(i), 1)};
-  showboxes(img, all_dets(ord(i), 2:5));
-  title(sprintf('det #%d: %s score = %.3f', ...
-      i, cls, score));
-  drawnow;
-  pause;
-end
-
-fprintf('No more detection with score >= 0\n');
+caffe.reset_all(); % free the memory occupied by the caffe models
 end
