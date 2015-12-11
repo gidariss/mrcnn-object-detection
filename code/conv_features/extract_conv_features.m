@@ -30,7 +30,7 @@ function [rsp, scale] = extract_conv_features(net, img, scale, mean_pix)
 if size(img,3) == 1, img = repmat(img, [1, 1, 3]); end
 rsp = {};
 num_scales = length(scale);
-fprintf('scales = {')
+% fprintf('scales = {')
 for i = 1:num_scales
     scale_this = scale(i);
     img_scaled = preprocess_img(img, scale_this, mean_pix);
@@ -38,10 +38,10 @@ for i = 1:num_scales
     if (numel(img_scaled) > 1200*2400*3) 
         scale = scale(1:(i-1));
         rsp   = rsp(1:(i-1));
-        fprintf('Does not fit in the memory\n');
+%         fprintf('Does not fit in the memory\n');
         break;
     end
-    fprintf('[%d %d] ', size(img_scaled,2), size(img_scaled,1));
+%     fprintf('[%d %d] ', size(img_scaled,2), size(img_scaled,1));
     
     net = caffe_reshape_net(net, {[size(img_scaled), 1]});
     response = net.forward({img_scaled});

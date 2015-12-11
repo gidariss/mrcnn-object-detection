@@ -20,6 +20,7 @@ try
     ld = load(edge_boxes_dst_file);
     all_bbox_proposals = ld.all_bbox_proposals;
 catch
+    edge_boxes_path = '../edges/';
     model=load(fullfile(edge_boxes_path,'models/forest/modelBsds')); model=model.model;
     model.opts.multiscale=0; model.opts.sharpen=2; model.opts.nThreads=4;
 
