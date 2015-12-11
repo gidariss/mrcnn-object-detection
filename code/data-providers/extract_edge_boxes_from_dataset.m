@@ -20,11 +20,6 @@ try
     ld = load(edge_boxes_dst_file);
     all_bbox_proposals = ld.all_bbox_proposals;
 catch
-    edge_boxes_path = '/home/spyros/Documents/projects/edges';
-    pdollar_toolbox_path = '/home/spyros/Documents/projects/pdollar-toolbox/';
-    addpath(edge_boxes_path)
-    addpath(genpath(pdollar_toolbox_path))
-
     model=load(fullfile(edge_boxes_path,'models/forest/modelBsds')); model=model.model;
     model.opts.multiscale=0; model.opts.sharpen=2; model.opts.nThreads=4;
 

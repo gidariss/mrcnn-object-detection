@@ -61,9 +61,8 @@ Installation:
 	{path-to-mrcnn-object-detection}/data/vgg_pretrained_models
 
 4.  open matlab from the directory {path-to-mrcnn-object-detection}/
-5.  Run mrcnn_build.m  
+5.  Edit the startup.m script by setting the installation directories paths of Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search to the proper variables (see startup.m).
 6.  Run startup.m  
-7. add on matlab the paths to installation directories of the Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search code.
 
 If you will use the pre-trained object detection models then
 

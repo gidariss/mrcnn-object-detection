@@ -20,10 +20,6 @@ try
     ld = load(ss_boxes_dst_file);
     all_bbox_proposals = ld.all_bbox_proposals;
 catch
-    ss_boxes_path = '/home/spyros/Documents/projects/selective_search';
-    
-    addpath(genpath(ss_boxes_path));
-
     chunk_size = 1000;
     num_imgs   = numel(image_db.image_paths);
     num_chunks = ceil(num_imgs/chunk_size);
