@@ -35,10 +35,15 @@ Requirements:
 -- Software: 
 
 1) MATLAB (tested with R2014b)
+
 2) Caffe: https://github.com/BVLC/caffe
+
 3) LIBLINEAR (only for training)  
+
 4) Edge Boxes code: https://github.com/pdollar/edges
+
 5) Piotr's image processing MATLAB toolbox: http://vision.ucsd.edu/~pdollar/toolbox/doc/index.html
+
 6) Selective search code: http://huppelen.nl/publications/SelectiveSearchCodeIJCV.zip
 
 -- Data: 
