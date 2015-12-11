@@ -42,6 +42,7 @@ Requirements:
 6) Selective search code: http://huppelen.nl/publications/SelectiveSearchCodeIJCV.zip
 
 -- Data: 
+
 1) PASCAL VOC2007  
 2) PASCAL VOC2012    
 
@@ -54,23 +55,21 @@ Installation:
 3. Place the VGG16 model pre-trained on ImageNet for the Image Classification task on:
 	{path-to-mrcnn-object-detection}/data/vgg_pretrained_models
 
-If you are going to do experiments on PASCAL VOC2007 or VOC2012 datasets then:
-3. Place the VOCdevkit of VOC2007 on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007 
-4. Place the VOCdevkit of VOC2012 on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012
-  
-5. Place the selective search and edge box proposals on the following directories   
-i)  {path-to-mrcnn-object-detection}/projects/data/edge_boxes_data  
-ii) {path-to-mrcnn-object-detection}/projects/data/selective_search_data  
+4.  open matlab from the directory {path-to-mrcnn-object-detection}/
+5.  Run mrcnn_build.m  
+6.  Run startup.m  
+7. add on matlab the paths to installation directories of the Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search code.
 
 If you will use the pre-trained object detection models then
-6. Place the pre-trained models on the following directories:  
-	I)  {path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012  : multi-region recognition model.  
-	II) {path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007/ : bounding box regression model.  
 
-7.  open matlab from the directory {path-to-mrcnn-object-detection}/
-8.  Run mrcnn_build.m  
-9.  Run startup.m  
-10. add on matlab the paths to installation directories of the Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search code.
+8. Place the pre-trained models on the following directories:  
+	I)  {path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012  : multi-region recognition model.  
+	II) {path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007/ : bounding box regression model.
+
+If you are going to do experiments on PASCAL VOC2007 or VOC2012 datasets then:
+
+9. Place the VOCdevkit of VOC2007 on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007 
+10. Place the VOCdevkit of VOC2012 on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012
 
 ###################################################################
 
