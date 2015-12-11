@@ -56,24 +56,25 @@ Requirements:
 Installation:
 
 1. Install CAFFE https://github.com/BVLC/caffe
-2. Place a soft link to caffe directory on {path-to-mrcnn-object-detection}/external/caffe  
-3. Place the VGG16 model pre-trained on ImageNet for the Image Classification task on:
+2. Place a soft link of caffe directory on {path-to-mrcnn-object-detection}/external/caffe  
+3. Place a soft link of the edge boxes installation directory on {path-to-mrcnn-object-detection}/external/edges
+4. Place the VGG16 model pre-trained on ImageNet for the Image Classification task on:
 	{path-to-mrcnn-object-detection}/data/vgg_pretrained_models
 
-4.  open matlab from the directory {path-to-mrcnn-object-detection}/
-5.  Edit the startup.m script by setting the installation directories paths of Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search to the proper variables (see startup.m).
-6.  Run startup.m  
+5.  open matlab from the directory {path-to-mrcnn-object-detection}/
+6.  Edit the startup.m script by setting the installation directories paths of Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search to the proper variables (see startup.m).
+7.  Run startup.m  
 
-If you will use the pre-trained object detection models then
+If you are going to use the pre-trained object detection models then
 
-8. Place the pre-trained models on the following directories:  
+9. Place the pre-trained models on the following directories:  
 	I)  {path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012  : multi-region recognition model.  
 	II) {path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007/ : bounding box regression model.
 
 If you are going to do experiments on PASCAL VOC2007 or VOC2012 datasets then:
 
-9. Place the VOCdevkit of VOC2007 on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007 
-10. Place the VOCdevkit of VOC2012 on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012
+10. Place the VOCdevkit of VOC2007 on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007 
+11. Place the VOCdevkit of VOC2012 on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012
 
 ###################################################################
 
@@ -88,3 +89,12 @@ script_test_object_detection_iter_loc('MRCNN_VOC2007_2012', 'vgg_bbox_regression
 By default, the above script uses the edge box proposals.  
 
 ###################################################################
+
+Demos:
+1) try the object detection demo "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m" that detects objects in an image based on the Multi-Region CNN model (section 3 of the technical report). For this demo the semantic segmentation aware features and the object localization module are not being used.
+
+To run the above demo you will require a GPU with 12 Gbytes of memory.
+###################################################################
+
+
+
