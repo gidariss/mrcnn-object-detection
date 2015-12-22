@@ -92,6 +92,7 @@ By default, the above script uses the edge box proposals.
 
 Demos:
 1) try the object detection demo "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m" that detects objects in an image based on the Multi-Region CNN model (section 3 of the technical report). For this demo the semantic segmentation aware features and the object localization module are not being used.
+2) try the object detection demo "{path-to-mrcnn-object-detection}/code/example/demo_object_detection_with_iterative_loc.m" that detects objects in an image based on the Multi-Region CNN model (section 3 of the technical report) and the Iterative Localization scheme (section 5 of the technical report). For this demo the semantic segmentation aware features are not being used.
 
 To run the above demo you will require a GPU with 12 Gbytes of memory.
 ###################################################################
