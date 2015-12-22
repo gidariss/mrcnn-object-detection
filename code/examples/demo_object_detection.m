@@ -19,7 +19,7 @@ function [ bbox_detections ] = demo_object_detection( img, model_obj_rec, conf )
 % 1) img: a H x W x 3 uint8 matrix that contains the image pixel values
 % 2) model_obj_rec: a struct with the object recognition model
 % 3) conf: a struct that must contain the following fields:
-%    a) conf.nms_over_thrs: scalar value with the IoU threshold that will be
+%    a) conf.nms_iou_thrs: scalar value with the IoU threshold that will be
 %       used during the non-max-suppression step
 %    b) conf.thresh: is a C x 1 array, where C is the number of categories.
 %       It must contains the threshold per category that will be used for 
@@ -91,36 +91,10 @@ fprintf(' %.3f sec\n', toc(th));
 
 max_per_image = 100;
 fprintf('applying the non-max-suppression step... '); th = tic;
-bbox_detections = postprocess_bboxes_scored(bbox_cand_dets, conf.thresh, ...
-    conf.nms_over_thrs, max_per_image);
+bbox_detections = post_process_candidate_detections( bbox_cand_dets, ...
+    conf.thresh, conf.nms_iou_thrs, max_per_image);
 fprintf(' %.3f sec\n', toc(th));
 
-end
-
-function bbox_detections = postprocess_bboxes_scored(bbox_scored, thresh, nms_over_thrs, max_per_image)
-
-num_classes = size(bbox_scored,2) - 4;
-for j = 1:num_classes
-    bbox_detections{j} = post_process_bboxes(bbox_scored(:,1:4), bbox_scored(:,4+j), ...
-        thresh(j), nms_over_thrs, max_per_image);
-end    
-
-end
-
-function [bbox_dets, indices] = post_process_bboxes(boxes, scores, score_thresh, nms_over_thrs, max_per_image)
-indices = find(scores > score_thresh);
-keep    = nms(cat(2, single(boxes(indices,:)), single(scores(indices))), nms_over_thrs);
-indices = indices(keep);
-if ~isempty(indices)
-    [~, order] = sort(scores(indices), 'descend');
-    order      = order(1:min(length(order), max_per_image));
-    indices    = indices(order);
-    boxes      = boxes(indices,:);
-    scores     = scores(indices);
-    bbox_dets  = cat(2, single(boxes), single(scores));
-else
-    bbox_dets   = zeros(0, 5, 'single');
-end
 end
 
 function bbox_proposals = extract_edge_boxes_from_image(img)

@@ -153,7 +153,7 @@ catch exception
         if iter == 1
             % Prune candidate bboxes with low confidence score
             fprintf('Prune candidate bboxes with low confidence score\n');
-            abbox_det_cands{iter} = post_process_scored_bboxes(abbox_det_cands{iter}, ...
+            abbox_det_cands{iter} = post_process_candidate_detections_all_imgs(abbox_det_cands{iter}, ...
                 opts.nms_init, opts.score_thr_init, 'ave_per_image', opts.ave_per_image_init);
             is_per_class = true; dst_directory = dst_loc_directory;
         end
@@ -175,7 +175,7 @@ end
 %******************************* EVALUATE mAP  ****************************
 abbox_dets_cands_all = merge_detected_bboxes(abbox_det_cands(1:opts.num_iterations));
 abbox_dets_cands_all = abbox_dets_cands_all{1};
-abbox_dets = post_process_scored_bboxes(abbox_dets_cands_all, opts.nms_thr, ...
+abbox_dets = post_process_candidate_detections_all_imgs(abbox_dets_cands_all, opts.nms_thr, ...
     opts.score_thr, 'is_per_class', true, 'do_bbox_voting', true);
 
 fprintf('Object Localization %d Iterations:\n', opts.num_iterations);
@@ -194,13 +194,3 @@ printAPResults(classes, ap_results);
 
 %************************************************************************** 
 end
-
-function model_bbox_loc = load_bbox_loc_model_on_caffe(model_bbox_loc, full_model_loc_dir)
-curr_dir = pwd;
-cd(full_model_loc_dir);
-model_phase = 'test';
-model_bbox_loc.net = caffe_load_model( model_bbox_loc.net_def_file, ...
-    model_bbox_loc.net_weights_file, model_phase);
-cd(curr_dir);
-end
-

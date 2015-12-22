@@ -1,6 +1,10 @@
 function [abbox_scores] = score_bboxes_all_imgs(...
     model, image_paths, feature_paths, all_bbox_proposals, ...
     dst_directory, image_set_name, varargin)
+% score_bboxes_all_imgs given a bounding box recognition model and a set of
+% images with their corresponding convolutional features and their bounding  
+% box proposals, for each image it assigns a classification score to each 
+% bounding box proposal. 
 % 
 % This file is part of the code that implements the following ICCV2015 accepted paper:
 % title: "Object detection via a multi-region & semantic segmentation-aware CNN model"

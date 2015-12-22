@@ -1,5 +1,35 @@
-function [pool_feat, regions] = convFeat_to_poolFeat_multi_region(pooler, feat, boxes, random_scale)
+function [region_feats, regions] = convFeat_to_poolFeat_multi_region(...
+    multiple_region_params, conv_feats, boxes, random_scale)
+% convFeat_to_poolFeat_multi_region given the convolutional features of an 
+% image, it adaptively pools fixed size region features for each bounding 
+% box and for multiple type of regions. 
 % 
+% INPUTS:
+% 1) multiple_region_params: is a M x 1 vector of objects of type struct that 
+% specify the region pooling parameters for each of the M types of regions
+% 2) conv_feats: is a K x 1 cell vector or vector of objects, with K >=1 
+% different type of convolutional features.
+% 3) boxes: a N x 4 array with the bounding box coordinates in the form of
+% [x0,y0,x1,y1] (where (x0,y0) is the top-left corner and (x1,y1) the 
+% bottom left corner)
+% 4) random_scale: a boolean value that if set to true then each bounding
+% box is projected to the convolutional features of a random scale of the
+% image.
+% 
+% OUTPUTS: 
+% 1) region_feats: is a M x 1 cell array where region_feats{i} is a N x F_i
+% array with the region features of each of the N bounding boxes for the 
+% i-th type of region. F_i is the number of features of the i-th type of
+% region.
+% 2) regions: is a M x 1 cell array with the region coordinates of each 
+% bounding box and for each type of region. Specifically, regions{i} is a
+% N x 8 array that contains the region coordinates of each of the N bounding
+% boxes for the i-th type of region. Note that each region is represented 
+% by 8 values [xo0, yo0, xo1, yo1, xi0, yi0, xi1, yi1] that correspond to
+% its outer rectangle [xo0, yo0, xo1, yo1] and its inner rectangle 
+% [xi0, yi0, xi1, yi1]. 
+% 
+%
 % This file is part of the code that implements the following ICCV2015 accepted paper:
 % title: "Object detection via a multi-region & semantic segmentation-aware CNN model"
 % authors: Spyros Gidaris, Nikos Komodakis
@@ -29,27 +59,33 @@ function [pool_feat, regions] = convFeat_to_poolFeat_multi_region(pooler, feat, 
 
 if ~exist('random_scale', 'var'), random_scale = false; end
 
-num_poolX  = length(pooler);
-pool_feat  = cell(num_poolX,1);
-regions    = cell(num_poolX,1);
+num_regions  = length(multiple_region_params);
+region_feats = cell(num_regions,1);
+regions      = cell(num_regions,1);
 
-for p = 1:num_poolX, pool_feat{p} = single([]); end
-for p = 1:num_poolX, regions{p}   = single([]); end
+for p = 1:num_regions, region_feats{p} = single([]); end
+for p = 1:num_regions, regions{p}   = single([]); end
 
 if isempty(boxes), return; end
 
-if length(feat) == 1
-    for p = 1:num_poolX 
-        [pool_feat{p}, regions{p}] = convFeat_to_poolFeat(pooler(p), feat, boxes, random_scale);
+% pool the region features the bounding boxes for each type of region
+if length(conv_feats) == 1
+    for p = 1:num_regions 
+        [region_feats{p}, regions{p}] = convFeat_to_poolFeat(...
+            multiple_region_params(p), conv_feats, boxes, random_scale);
     end
 else
-    if iscell(feat)
-        for p = 1:num_poolX 
-            [pool_feat{p}, regions{p}]  = convFeat_to_poolFeat(pooler(p), feat{pooler(p).feat_id}, boxes, random_scale);
+    if iscell(conv_feats)
+        for p = 1:num_regions 
+            [region_feats{p}, regions{p}]  = convFeat_to_poolFeat(...
+                multiple_region_params(p), conv_feats{multiple_region_params(p).feat_id}, ...
+                boxes, random_scale);
         end         
-    elseif isstruct(feat)
-        for p = 1:num_poolX 
-            [pool_feat{p}, regions{p}]  = convFeat_to_poolFeat(pooler(p), feat(pooler(p).feat_id), boxes, random_scale);
+    elseif isstruct(conv_feats)
+        for p = 1:num_regions 
+            [region_feats{p}, regions{p}]  = convFeat_to_poolFeat(...
+                multiple_region_params(p), conv_feats(multiple_region_params(p).feat_id), ...
+                boxes, random_scale);
         end        
     end
 end

@@ -1,4 +1,9 @@
 function [rsp, scale] = extract_conv_features(net, img, scale, mean_pix)
+% extract_conv_features extract the convolutional features of one image
+% for the specified scales using the convolutional neural network net. 
+% mean_pix is a 3 x 1 or 1 x 3 array with the mean pixel value per color 
+% channel that is subtracted from the scaled image before is being fed to
+% the convolutional neural network.
 % 
 % This file is part of the code that implements the following ICCV2015 accepted paper:
 % title: "Object detection via a multi-region & semantic segmentation-aware CNN model"
@@ -33,18 +38,29 @@ num_scales = length(scale);
 % fprintf('scales = {')
 for i = 1:num_scales
     scale_this = scale(i);
+    % pre-process the image by 1) scaling it such that its smalled 
+    % dimension to be scale_this and 2) subtracting from each color channel 
+    % the average color value (mean_pix)
     img_scaled = preprocess_img(img, scale_this, mean_pix);
-    
-    if (numel(img_scaled) > 1200*2400*3) 
+    % change the order of dimensions from [height x width x channels] ->
+    % [width x height x channels] in order to be compatible with the C++
+    % implementation of CAFFE
+    img_scaled = permute(img_scaled, [2 1 3]); 
+
+    if (numel(img_scaled) > 1200*2400*3) % it depend from GPU memory. 1200*2400*3 was set for GPU with 6Gbytes of memory.
         scale = scale(1:(i-1));
         rsp   = rsp(1:(i-1));
-%         fprintf('Does not fit in the memory\n');
+%         fprintf('It does not fit in the GPU memory\n');
         break;
     end
 %     fprintf('[%d %d] ', size(img_scaled,2), size(img_scaled,1));
     
+    % reshape the network such the it will get as input one image of size size(img_scaled)
     net = caffe_reshape_net(net, {[size(img_scaled), 1]});
+    % get the convolutional features of the image
     response = net.forward({img_scaled});
+    % change the order of dimensions from [width x height x channels] -> 
+    % [height x width x channels]
     rsp{i} = permute(response{1}, [2, 1, 3]);
 end
 %fprintf('}')
@@ -79,5 +95,4 @@ end
 img = single(img);
 img = img(:, :, [3 2 1]);
 for c = 1:3, img(:,:,c) = img(:,:,c) - mean_pix(c); end
-img = permute(img, [2 1 3]);
 end

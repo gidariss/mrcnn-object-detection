@@ -1,7 +1,13 @@
 function all_bboxes_out = regress_bboxes_all_imgs(...
     model, image_paths, feature_paths, all_bboxes_in, ...
     dst_directory, image_set_name, varargin)
+% regress_bboxes_all_imgs given a bounding box regression model and a set 
+% of images with their corresponding convolutional features and their   
+% bounding box proposals, for each image it regresses to new the bounding  
+% box coordinates such that the new boxes will (ideally) tighter enclose an
+% object of interest.
 % 
+%
 % This file is part of the code that implements the following ICCV2015 accepted paper:
 % title: "Object detection via a multi-region & semantic segmentation-aware CNN model"
 % authors: Spyros Gidaris, Nikos Komodakis
