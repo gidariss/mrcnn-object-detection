@@ -14,7 +14,7 @@ This code implements the following ICCV2015 accepted paper:
 
 If you find this code useful in your research, please consider citing:  
 
-@article{gidaris2015object,
+> @article{gidaris2015object,
   title={Object detection via a multi-region \& semantic segmentation-aware CNN model},
   author={Gidaris, Spyros and Komodakis, Nikos},
   journal={arXiv preprint arXiv:1505.01749},
