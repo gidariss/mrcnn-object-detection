@@ -80,10 +80,14 @@ For running experiments on PASCAL VOC2007 or VOC2012 datasets then:
 *###########################################################################*
 
 ### Demos:
-1) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m" detects objects in an image using the Multi-Region CNN recognition model (section 3 of the technical report). For this demo the semantic segmentation aware features and the object localization module are not being used.
-2) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_Iterative_Localization.m" detects objects in an image using the Multi-Region CNN recognition model (section 3 of the technical report) and the Iterative Localization scheme (section 5 of the technical report). For this demo the semantic segmentation aware features are not being used.
-3) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_SCNN_detection.m" detects objects in an image using the Multi-Region with the semantic segmentation-aware CNN features recognition model (sections 3 and 4 of the technical report). For this demo the object localization module is not being used.
-4) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_SCNN_and_Iterative_Localization.m" detects objects in an image using the Multi-Region with the semantic segmentation-aware CNN features recognition model (sections 3 and 4 of the technical report) and the Iterative Localization scheme (section 5 of the technical report). 
+1. `"{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m"`  
+It detects objects in an image using the multi-region CNN recognition model (section 3 of the technical report). For this demo the semantic segmentation aware features and the iterative localization scheme are not being used.
+2. `"{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_Iterative_Localization.m"`  
+It detects objects in an image using the multi-region CNN recognition model (section 3 of the technical report) and the iterative localization scheme (section 5 of the technical report). For this demo the semantic segmentation aware features are not being used.
+3. `"{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_SCNN_detection.m"`  
+It detects objects in an image using the multi-region with the semantic segmentation-aware CNN features recognition model (sections 3 and 4 of the technical report). For this demo the iterative localization scheme is not being used.
+4. `"{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_SCNN_and_Iterative_Localization.m"`  
+It detects objects in an image using the multi-region with the semantic segmentation-aware CNN features recognition model (sections 3 and 4 of the technical report) and the iterative localization scheme (section 5 of the technical report). 
 
 To run the above demos you will require a GPU with at least 12 Gbytes of memory
 
