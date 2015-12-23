@@ -25,48 +25,40 @@ This code is released under the MIT License (refer to the LICENSE file for detai
 
 ### Requirements:
 
--- Software: 
++ Software:  
+	1. MATLAB (tested with R2014b)
+	2. Caffe: https://github.com/BVLC/caffe
+	3. LIBLINEAR (only for training)  
+	4. Edge Boxes code: https://github.com/pdollar/edges
+	5. Piotr's image processing MATLAB toolbox: http://vision.ucsd.edu/~pdollar/toolbox/doc/index.html
+	6. Selective search code: http://huppelen.nl/publications/SelectiveSearchCodeIJCV.zip
 
-1) MATLAB (tested with R2014b)
-
-2) Caffe: https://github.com/BVLC/caffe
-
-3) LIBLINEAR (only for training)  
-
-4) Edge Boxes code: https://github.com/pdollar/edges
-
-5) Piotr's image processing MATLAB toolbox: http://vision.ucsd.edu/~pdollar/toolbox/doc/index.html
-
-6) Selective search code: http://huppelen.nl/publications/SelectiveSearchCodeIJCV.zip
-
--- Data: 
-
-1) PASCAL VOC2007  
-2) PASCAL VOC2012    
++ Data:   
+	1. PASCAL VOC2007 detection data: http://host.robots.ox.ac.uk/pascal/VOC/  
+	2. PASCAL VOC2012 detection data: http://host.robots.ox.ac.uk/pascal/VOC/
 
 ### Installation:
 
 1. Install CAFFE https://github.com/BVLC/caffe
-2. Place a soft link of caffe directory on {path-to-mrcnn-object-detection}/external/caffe  
-3. Place a soft link of the edge boxes installation directory on {path-to-mrcnn-object-detection}/external/edges
+2. Place a soft link of caffe directory on `{path-to-mrcnn-object-detection}/external/caffe` 
+3. Place a soft link of the edge boxes installation directory on `{path-to-mrcnn-object-detection}/external/edges`
 4. Place the VGG16 model pre-trained on ImageNet for the Image Classification task on:
-	{path-to-mrcnn-object-detection}/data/vgg_pretrained_models
-
-5.  open matlab from the directory {path-to-mrcnn-object-detection}/
+	`{path-to-mrcnn-object-detection}/data/vgg_pretrained_models`
+5.  open matlab from the directory `{path-to-mrcnn-object-detection}/`
 6.  Edit the startup.m script by setting the installation directories paths of Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search to the proper variables (see startup.m).
 7.  Run startup.m  
 
 To use the pre-trained object detection models 
 
 9. Place the pre-trained models on the following directories:  
-	+ {path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012  : multi-region recognition model.
-	+ {path-to-mrcnn-object-detection}/models-exps/MRCNN_SEMANTIC_FEATURES_VOC2007_2012  : multi-region with the semantic segmentation aware cnn featues recognition model.			 
-	+ {path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007/ : bounding box regression model.
+	+ `{path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012`  : multi-region recognition model.
+	+ `{path-to-mrcnn-object-detection}/models-exps/MRCNN_SEMANTIC_FEATURES_VOC2007_2012`  : multi-region with the semantic segmentation aware cnn featues recognition model.			 
+	+ `{path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007` : bounding box regression model.
 
 For running experiments on PASCAL VOC2007 or VOC2012 datasets then:
 
-10. Place the VOCdevkit of VOC2007 on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007 
-11. Place the VOCdevkit of VOC2012 on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012
+10. Place the VOCdevkit of VOC2007 on `{path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit` and its data on `{path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007` 
+11. Place the VOCdevkit of VOC2012 on `{path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit` and its data on `{path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012`
 
 ### Demos:
 1. `"{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m"`  
