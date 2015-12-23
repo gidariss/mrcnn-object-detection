@@ -25,12 +25,12 @@ If you find this code useful in your research, please consider citing:
 
 *###########################################################################*
 
-License:  
+### License  
 This code is released under the MIT License (refer to the LICENSE file for details).  
 
 *###########################################################################*
 
-Requirements:  
+### Requirements
 
 -- Software: 
 
@@ -53,7 +53,7 @@ Requirements:
 
 *###########################################################################*
 
-Installation:
+### Installation
 
 1. Install CAFFE https://github.com/BVLC/caffe
 2. Place a soft link of caffe directory on {path-to-mrcnn-object-detection}/external/caffe  
@@ -79,7 +79,7 @@ For running experiments on PASCAL VOC2007 or VOC2012 datasets then:
 
 *###########################################################################*
 
-Demos:
+### Demos
 1) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m" detects objects in an image using the Multi-Region CNN recognition model (section 3 of the technical report). For this demo the semantic segmentation aware features and the object localization module are not being used.
 2) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_Iterative_Localization.m" detects objects in an image using the Multi-Region CNN recognition model (section 3 of the technical report) and the Iterative Localization scheme (section 5 of the technical report). For this demo the semantic segmentation aware features are not being used.
 3) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_SCNN_detection.m" detects objects in an image using the Multi-Region with the semantic segmentation-aware CNN features recognition model (sections 3 and 4 of the technical report). For this demo the object localization module is not being used.
@@ -89,7 +89,7 @@ To run the above demos you will require a GPU with at least 12 Gbytes of memory
 
 *###########################################################################*
 
-Testing the pre-trained models on VOC2007 test set: 
+### Testing the pre-trained models on VOC2007 test set
 
 1. Test the multi-region CNN recognition model coupled with the iterative bounding box localization module on the VOC2007 test set by running:  
 a) script_extract_vgg16_conv_features('test', '2007', 'gpu_id', 1); 
