@@ -18,8 +18,7 @@ If you find this code useful in your research, please consider citing:
   title={Object detection via a multi-region \& semantic segmentation-aware CNN model},  
   author={Gidaris, Spyros and Komodakis, Nikos},  
   journal={arXiv preprint arXiv:1505.01749},  
-  year={2015}  
-}
+  year={2015}}
 
 ### License:
 This code is released under the MIT License (refer to the LICENSE file for details).  
