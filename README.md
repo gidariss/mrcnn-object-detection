@@ -1,6 +1,6 @@
 ## *Object detection via a multi-region & semantic segmentation-aware CNN model*
 
-###################################################################
+###########################################################################
 
 Introduction:
 
@@ -23,12 +23,12 @@ If you find this code useful in your research, please consider citing:
   year={2015}
 }
 
-###################################################################
+###########################################################################
 
 License:  
 This code is released under the MIT License (refer to the LICENSE file for details).  
 
-###################################################################
+###########################################################################
 
 Requirements:  
 
@@ -51,7 +51,7 @@ Requirements:
 1) PASCAL VOC2007  
 2) PASCAL VOC2012    
 
-###################################################################
+###########################################################################
 
 Installation:
 
@@ -68,34 +68,44 @@ Installation:
 If you are going to use the pre-trained object detection models then
 
 9. Place the pre-trained models on the following directories:  
-	I)  {path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012  : multi-region recognition model.  
-	II) {path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007/ : bounding box regression model.
+	I)   {path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012  : multi-region recognition model.  
+    II)  {path-to-mrcnn-object-detection}/models-exps/MRCNN_SEMANTIC_FEATURES_VOC2007_2012  : multi-region with the semantic segmentation aware cnn featues recognition model.  
+	III) {path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007/ : bounding box regression model.
 
-If you are going to do experiments on PASCAL VOC2007 or VOC2012 datasets then:
+For running experiments on PASCAL VOC2007 or VOC2012 datasets then:
 
 10. Place the VOCdevkit of VOC2007 on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007 
 11. Place the VOCdevkit of VOC2012 on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012
 
-###################################################################
+###########################################################################
+
+Demos:
+1) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m" detects objects in an image using the Multi-Region CNN recognition model (section 3 of the technical report). For this demo the semantic segmentation aware features and the object localization module are not being used.
+2) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_Iterative_Localization.m" detects objects in an image using the Multi-Region CNN recognition model (section 3 of the technical report) and the Iterative Localization scheme (section 5 of the technical report). For this demo the semantic segmentation aware features are not being used.
+3) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_SCNN_detection.m" detects objects in an image using the Multi-Region with the semantic segmentation-aware CNN features recognition model (sections 3 and 4 of the technical report). For this demo the object localization module is not being used.
+4) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_with_SCNN_and_Iterative_Localization.m" detects objects in an image using the Multi-Region with the semantic segmentation-aware CNN features recognition model (sections 3 and 4 of the technical report) and the Iterative Localization scheme (section 5 of the technical report). 
+
+To run the above demos you will require a GPU with at least 12 Gbytes of memory
+
+###########################################################################
 
 Testing the pre-trained models on VOC2007 test set: 
 
-1. Pre-cache the VGG16 conv5 features of the images in VOC2007 test set (for the scales 480, 576, 688, 874, and 1200) by running on matlab:  
-script_extract_vgg16_conv_features('test', '2007', 'gpu_id', 1);   
-gpu_id is a one-based index; if a non positive value is given then the CPU will be used instead. It should take around 2-3 hours for the VOC2007 test set.  
+1. Test the multi-region CNN recognition model coupled with the iterative bounding box localization module on the VOC2007 test set by running:  
+a) script_extract_vgg16_conv_features('test', '2007', 'gpu_id', 1); 
+b) script_test_object_detection_iter_loc('MRCNN_VOC2007_2012', 'vgg_bbox_regression_R0013_voc2012_2007', 'gpu_id', 1, 'image_set_test', 'test', 'voc_year_test','2007');
+During the a) step, the VGG16 conv5 feature maps for the scales 480, 576, 688, 874, and 1200 are pre-cached (see activation maps in section 3 of the technical report). 
+During the b) step, the detection pipeline is applied on the images of VOC2007 test set. By default, this script uses the edge box proposals as input to the detection pipeline. 
+The gpu_id parameter is a one-based index of the GPU that will be used for running the experiments; if a non positive value is given then the CPU will be used instead.
+ 
+2. Test the multi-region with the semantic segmentation aware cnn features recognition model coupled with the iterative bounding box localization module on the VOC2007 test set by running:  
+a) script_extract_vgg16_conv_features('test', '2007', 'gpu_id', 1); 
+b) script_extract_sem_seg_aware_features('test', '2007', 'gpu_id', 1);
+c) script_test_object_detection_iter_loc('MRCNN_SEMANTIC_FEATURES_VOC2007_2012', 'vgg_bbox_regression_R0013_voc2012_2007', 'gpu_id', 1, 'image_set_test', 'test', 'voc_year_test','2007');   
+During the a) step, the VGG16 conv5 feature maps for the scales 576, 874, and 1200 are pre-cached (see section 3 of the technical report). 
+During the b) step, the semantic segmentation aware activation maps for the scales 480, 576, 688, 874, and 1200 are pre-cached (see section 4 of the technical report). To run this script you must run the script of step a) before.
+During the c) step, the detection pipeline is applied on the images of VOC2007 test set. By default, this script uses the edge box proposals as input to the detection pipeline. 
 
-2. To test the multi-region CNN recognition model coupled with the iterative bounding box localization module on the VOC2007 test set run:  
-script_test_object_detection_iter_loc('MRCNN_VOC2007_2012', 'vgg_bbox_regression_R0013_voc2012_2007', 'gpu_id', 1);   
-By default, the above script uses the edge box proposals.  
+The above script can run on a GPU with at least 6 Gbytes of memory
 
-###################################################################
-
-Demos:
-1) try the object detection demo "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m" that detects objects in an image based on the Multi-Region CNN model (section 3 of the technical report). For this demo the semantic segmentation aware features and the object localization module are not being used.
-2) try the object detection demo "{path-to-mrcnn-object-detection}/code/example/demo_object_detection_with_iterative_loc.m" that detects objects in an image based on the Multi-Region CNN model (section 3 of the technical report) and the Iterative Localization scheme (section 5 of the technical report). For this demo the semantic segmentation aware features are not being used.
-
-To run the above demo you will require a GPU with 12 Gbytes of memory.
-###################################################################
-
-
-
+###########################################################################

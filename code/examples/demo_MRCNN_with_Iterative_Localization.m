@@ -107,9 +107,9 @@ conf.box_method = 'edge_boxes'; % string with the box proposals algorithm that
 % will be used in order to generate the set of candidate boxes. Currently 
 % it supports the 'edge_boxes' or the 'selective_search' types only.
 
-conf.nms_iou_thrs_init  = 0.95;
+conf.nms_iou_thrs_init  =  0.95;
 conf.thresh_init        = -2.5 * ones(num_categories,1);
-conf.num_iterations     = 2;
+conf.num_iterations     =  2;
 
 % detect object in the image
 [ bbox_detections ] = demo_object_detection_with_iterative_loc( ...

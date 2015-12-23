@@ -19,7 +19,7 @@ function script_extract_sem_seg_aware_features(image_set, voc_year, varargin)
 % ---------------------------------------------------------
 
 ip = inputParser;
-ip.addOptional('start',      1,   @isscalar);
+ip.addOptional('start',      1,   @isscalar); 
 ip.addOptional('end',        0,   @isscalar);
 ip.addOptional('scales',   [576 874 1200], @ismatrix);
 ip.addOptional('gpu_id',     0,  @isnumeric); 
