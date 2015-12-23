@@ -92,7 +92,8 @@ To run the above demos you will require a GPU with at least 12 Gbytes of memory
 ### Testing the pre-trained models on VOC2007 test set:
 
 1. Test the multi-region CNN recognition model coupled with the iterative bounding box localization module on the VOC2007 test set by running:  
-	1. `script_extract_vgg16_conv_features('test', '2007', 'gpu_id', 1);`  It pre-caches the VGG16 conv5 feature maps for the scales 480, 576, 688, 874, and 1200 (see activation maps in section 3 of the technical report).     
+	1. `script_extract_vgg16_conv_features('test', '2007', 'gpu_id', 1);`  
+	It pre-caches the VGG16 conv5 feature maps for the scales 480, 576, 688, 874, and 1200 (see activation maps in section 3 of the technical report).     
 	2. `script_test_object_detection_iter_loc('MRCNN_VOC2007_2012', 'vgg_bbox_regression_R0013_voc2012_2007', 'gpu_id', 1, 'image_set_test', 'test', 'voc_year_test','2007');`  
 During the a) step, the VGG16 conv5 feature maps for the scales 480, 576, 688, 874, and 1200 are pre-cached (see activation maps in section 3 of the technical report).   
 During the b) step, the detection pipeline is applied on the images of VOC2007 test set. By default, this script uses the edge box proposals as input to the detection pipeline.   
