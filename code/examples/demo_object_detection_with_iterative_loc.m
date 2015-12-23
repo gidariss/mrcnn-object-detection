@@ -104,8 +104,14 @@ num_categories = length(category_names);
 
 % extract the activation maps of the image
 fprintf('Extracting the image actication maps... '); th = tic;
-feat_data = get_conv_feat_data(model_obj_rec.act_maps_net, img, ...
-    model_obj_rec.scales, model_obj_rec.mean_pix); 
+if isfield(model_obj_rec,'use_sem_seg_feats') && model_obj_rec.use_sem_seg_feats
+    feat_data = extract_image_activation_maps(model_obj_rec.act_maps_net, img, ...
+        model_obj_rec.scales, model_obj_rec.mean_pix, ...
+        model_obj_rec.sem_act_maps_net, model_obj_rec.semantic_scales);     
+else
+    feat_data = extract_image_activation_maps(model_obj_rec.act_maps_net, img, ...
+        model_obj_rec.scales, model_obj_rec.mean_pix); 
+end
 fprintf(' %.3f sec\n', toc(th));
 
 

@@ -123,12 +123,7 @@ total_el_time = 0;
 for i = fist_img_idx:num_imgs
     fprintf('%s: bbox rec. %d/%d ', procid(), i, num_imgs); th = tic;
     
-    if isempty(feature_paths)
-        image = get_image(image_paths{i});
-        feat_data = get_conv_feat_data(model.act_maps_net, image, model.scales, model.mean_pix);
-    else
-        feat_data = read_feat_conv_data(feature_paths{i});
-    end
+    feat_data = read_feat_conv_data(feature_paths{i});
     
     bbox_proposals  = get_bbox_proposals(all_bbox_proposals, i, is_per_class);
     bboxes_scores   = scores_bboxes_img( model, feat_data.feat, bbox_proposals );

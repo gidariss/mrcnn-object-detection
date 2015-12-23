@@ -19,10 +19,7 @@ function extract_semantic_features_all_images(net, conv5_file_paths, destination
 ip = inputParser;
 ip.addOptional('start',    1, @isscalar);
 ip.addOptional('end',      0, @isscalar);
-
 ip.addOptional('scales',   [576 874 1200], @ismatrix);
-ip.addOptional('mean_pix', [103.939, 116.779, 123.68],  @isnumeric);
-
 ip.addOptional('do_interleave',        0,  @isscalar);
 ip.addOptional('interleave_num_steps', 1,  @isscalar);
 ip.addOptional('force',            false,  @islogical);

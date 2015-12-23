@@ -1,6 +1,7 @@
-function demo_MRCNN_detection
-% object detection demo using the Multi-Region CNN recognition model 
-% (section 3 of technical report) only. No localization module is used.
+function demo_MRCNN_with_SCNN_detection
+% object detection demo using the Multi-Region CNN with the semantic
+% segmentation aware CNN features recognition model (sections 3 and 4 of 
+% the technical report). No localization module is used.
 % 
 % This file is part of the code that implements the following ICCV2015 accepted paper:
 % title: "Object detection via a multi-region & semantic segmentation-aware CNN model"
@@ -8,7 +9,6 @@ function demo_MRCNN_detection
 % institution: Universite Paris Est, Ecole des Ponts ParisTech
 % Technical report: http://arxiv.org/abs/1505.01749
 % code: https://github.com/gidariss/mrcnn-object-detection
-% 
 % 
 % AUTORIGHTS
 % --------------------------------------------------------
@@ -29,7 +29,7 @@ caffe.reset_all();
 fprintf('Loading detection models... '); th = tic;
 
 % set the path of the bounding box recognition moddel for object detection
-model_rec_dir_name  = 'MRCNN_VOC2007_2012'; % model's directory name 
+model_rec_dir_name  = 'MRCNN_SEMANTIC_FEATURES_VOC2007_2012'; % model's directory name 
 full_model_rec_dir  = fullfile(pwd, 'models-exps', model_rec_dir_name); % full path to the model's directory
 use_detection_svms  = true;
 model_rec_mat_name  = 'detection_model_svm.mat'; % model's matlab filename
@@ -68,6 +68,36 @@ model_obj_rec.scales   = [480 576 688 874 1200];
 model_obj_rec.mean_pix = [103.939, 116.779, 123.68]; 
 % load the activation maps module on caffe
 model_obj_rec.act_maps_net = caffe_load_model( model_obj_rec.act_net_def_file, model_obj_rec.act_net_weights_file);
+
+% Load the activation maps module for the semantic segmentation aware CNN 
+% features of an image. For this module we use the fully connected layers
+% of the VGG16 model reshaped to convolutional ones and trained for the
+% task of weak semantic segmentation (see section 4 of the technical report)
+% and they are applied on top convolutional features produced from conv5_3
+% layer of the VGG16 model.
+
+% set the path to the directory that contain the caffe defintion and 
+% weights files of the  activation maps module for the semantic
+% segmentation aware features
+sem_net_files_dir = fullfile(pwd,'data','vgg_pretrained_models'); 
+% path to the defintion file of the activation maps module for the semantic
+% segmentation aware features
+model_obj_rec.sem_act_net_def_file     = fullfile( sem_net_files_dir,'Semantic_Segmentation_Features_CNN.prototxt');
+% path to the weights file of the activation maps module for the semantic
+% segmentation aware features
+model_obj_rec.sem_act_net_weights_file = {fullfile(sem_net_files_dir,'Semantic_Segmentation_Features_CNN.caffemodel')};
+model_obj_rec.use_sem_seg_feats        = true;
+
+assert(exist(sem_net_files_dir,'dir')>0);
+assert(exist(model_obj_rec.sem_act_net_def_file ,'file')>0);
+assert(exist(model_obj_rec.sem_act_net_weights_file{1},'file')>0);
+% image scales that are being used for extracting the semantic segmentation 
+% aware activation maps
+model_obj_rec.semantic_scales  = [576 874 1200]; 
+% load the activation maps module for the semantic segmentation aware 
+% features on caffe
+model_obj_rec.sem_act_maps_net = caffe_load_model( model_obj_rec.sem_act_net_def_file, model_obj_rec.sem_act_net_weights_file);
+
 fprintf(' %.3f sec\n', toc(th));
 %**************************************************************************
 

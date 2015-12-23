@@ -1,4 +1,25 @@
 function demo_MRCNN_with_Iterative_Localization
+% object detection demo using the Multi-Region CNN recognition model 
+% (sections 3 of the technical report) and the iterative localization 
+% scheme (section 5 of technical report). 
+% 
+% This file is part of the code that implements the following ICCV2015 accepted paper:
+% title: "Object detection via a multi-region & semantic segmentation-aware CNN model"
+% authors: Spyros Gidaris, Nikos Komodakis
+% institution: Universite Paris Est, Ecole des Ponts ParisTech
+% Technical report: http://arxiv.org/abs/1505.01749
+% code: https://github.com/gidariss/mrcnn-object-detection
+% 
+% 
+% AUTORIGHTS
+% --------------------------------------------------------
+% Copyright (c) 2015 Spyros Gidaris
+% 
+% "Object detection via a multi-region & semantic segmentation-aware CNN model"
+% Technical report: http://arxiv.org/abs/1505.01749
+% Licensed under The MIT License [see LICENSE for details]
+% ---------------------------------------------------------
+
 gpu_id = 1; % gpu_id is a one-based index; if a non positive value is given
 % then the CPU will be used instead.  
 
@@ -6,6 +27,7 @@ caffe_set_device( gpu_id );
 caffe.reset_all();
 
 %***************************** LOAD MODELS ********************************
+fprintf('Loading detection models... '); th = tic;
 
 % set the path of the bounding box recognition model for object detection
 model_rec_dir_name  = 'MRCNN_VOC2007_2012'; % model's directory name 
@@ -26,7 +48,6 @@ full_model_loc_path = fullfile(full_model_loc_dir, model_loc_mat_name);  % full 
 assert(exist(full_model_loc_dir,'dir')>0);
 assert(exist(full_model_loc_path,'file')>0);
 
-fprintf('Loading detection models... '); th = tic;
 
 % Load the bounding box recognition moddel for object detection
 ld = load(full_model_rec_path, 'model');
@@ -108,4 +129,3 @@ caffe.reset_all(); % free the memory occupied by the caffe models
 
 
 end
-

@@ -1,9 +1,27 @@
-function [rsp, scale] = extract_conv_features(net, img, scale, mean_pix)
+function [rsp, scale] = extract_conv_features(CNN, img, scale, mean_pix)
 % extract_conv_features extract the convolutional features of one image
-% for the specified scales using the convolutional neural network net. 
-% mean_pix is a 3 x 1 or 1 x 3 array with the mean pixel value per color 
-% channel that is subtracted from the scaled image before is being fed to
-% the convolutional neural network.
+% for the specified scales using the provided convolutional neural network. 
+%
+% INPUTS:
+% 1) CNN: the caffe CNN struct with the convolutional neural network that
+% implements the activation mas module 
+% 2) image: a Height x Width x 3 uint8 array that represents the image
+% pixels
+% 3) scale: NumScales x 1 or 1 x NumScales vector with the images scales
+% that will be used. The i-th value should be the size in pixels of the
+% smallest dimension of the image in the i-th scale. The scales are
+% expected to sorted in ascending order.
+% 4) mean_pix: is a 3 x 1 or 1 x 3 vector with the mean pixel value per 
+% color channel that is subtracted from the scaled image before is being 
+% fed to the CNN
+%
+% OUTPUTS:
+% 1) rsp: a 1 x NumScales cell array with the convolutonal feature maps of 
+% each scale. The i-th element is a H_i x W_i x C array with the
+% convolutional feature maps of the i-th scale. H_i and W_i are the height 
+% and width correspondingly of the convolutional feature maps for the i-th
+% scale.
+% 2) scale: a 1 x NumScales vector with the used image scales
 % 
 % This file is part of the code that implements the following ICCV2015 accepted paper:
 % title: "Object detection via a multi-region & semantic segmentation-aware CNN model"
@@ -47,7 +65,9 @@ for i = 1:num_scales
     % implementation of CAFFE
     img_scaled = permute(img_scaled, [2 1 3]); 
 
-    if (numel(img_scaled) > 1200*2400*3) % it depend from GPU memory. 1200*2400*3 was set for GPU with 6Gbytes of memory.
+    if (numel(img_scaled) > 1200*2400*3) 
+        % If it doesn't fit in the GPU memory then skip this scale
+        % the value 1200*2400*3 was selected for a GPU with 6Gbytes of memory.
         scale = scale(1:(i-1));
         rsp   = rsp(1:(i-1));
 %         fprintf('It does not fit in the GPU memory\n');
@@ -56,9 +76,9 @@ for i = 1:num_scales
 %     fprintf('[%d %d] ', size(img_scaled,2), size(img_scaled,1));
     
     % reshape the network such the it will get as input one image of size size(img_scaled)
-    net = caffe_reshape_net(net, {[size(img_scaled), 1]});
-    % get the convolutional features of the image
-    response = net.forward({img_scaled});
+    CNN = caffe_reshape_net(CNN, {[size(img_scaled), 1]});
+    % get the convolutional feature maps of the image
+    response = CNN.forward({img_scaled});
     % change the order of dimensions from [width x height x channels] -> 
     % [height x width x channels]
     rsp{i} = permute(response{1}, [2, 1, 3]);
