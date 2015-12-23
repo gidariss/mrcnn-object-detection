@@ -1,6 +1,6 @@
 ## *Object detection via a multi-region & semantic segmentation-aware CNN model*
 
-# *###########################################################################*
+*###########################################################################*
 
 Introduction:
 
@@ -23,12 +23,12 @@ If you find this code useful in your research, please consider citing:
   year={2015}
 }
 
-###########################################################################
+*###########################################################################*
 
 License:  
 This code is released under the MIT License (refer to the LICENSE file for details).  
 
-###########################################################################
+*###########################################################################*
 
 Requirements:  
 
@@ -51,7 +51,7 @@ Requirements:
 1) PASCAL VOC2007  
 2) PASCAL VOC2012    
 
-###########################################################################
+*###########################################################################*
 
 Installation:
 
@@ -77,7 +77,7 @@ For running experiments on PASCAL VOC2007 or VOC2012 datasets then:
 10. Place the VOCdevkit of VOC2007 on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007 
 11. Place the VOCdevkit of VOC2012 on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012
 
-###########################################################################
+*###########################################################################*
 
 Demos:
 1) "{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m" detects objects in an image using the Multi-Region CNN recognition model (section 3 of the technical report). For this demo the semantic segmentation aware features and the object localization module are not being used.
@@ -87,7 +87,7 @@ Demos:
 
 To run the above demos you will require a GPU with at least 12 Gbytes of memory
 
-###########################################################################
+*###########################################################################*
 
 Testing the pre-trained models on VOC2007 test set: 
 
@@ -108,4 +108,4 @@ During the c) step, the detection pipeline is applied on the images of VOC2007 t
 
 The above script can run on a GPU with at least 6 Gbytes of memory
 
-###########################################################################
+*###########################################################################*
