@@ -1,7 +1,5 @@
 ## *Object detection via a multi-region & semantic segmentation-aware CNN model*
 
-*###########################################################################*
-
 ### Introduction:
 
 This code implements the following ICCV2015 accepted paper:  
@@ -23,12 +21,8 @@ If you find this code useful in your research, please consider citing:
   year={2015}
 }
 
-*###########################################################################*
-
 ### License:
 This code is released under the MIT License (refer to the LICENSE file for details).  
-
-*###########################################################################*
 
 ### Requirements:
 
@@ -51,8 +45,6 @@ This code is released under the MIT License (refer to the LICENSE file for detai
 1) PASCAL VOC2007  
 2) PASCAL VOC2012    
 
-*###########################################################################*
-
 ### Installation:
 
 1. Install CAFFE https://github.com/BVLC/caffe
@@ -65,19 +57,17 @@ This code is released under the MIT License (refer to the LICENSE file for detai
 6.  Edit the startup.m script by setting the installation directories paths of Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search to the proper variables (see startup.m).
 7.  Run startup.m  
 
-If you are going to use the pre-trained object detection models then
+To use the pre-trained object detection models 
 
 9. Place the pre-trained models on the following directories:  
-	I)   {path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012  : multi-region recognition model.  
-    II)  {path-to-mrcnn-object-detection}/models-exps/MRCNN_SEMANTIC_FEATURES_VOC2007_2012  : multi-region with the semantic segmentation aware cnn featues recognition model.  
-	III) {path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007/ : bounding box regression model.
+	+ {path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012  : multi-region recognition model.
+	+ {path-to-mrcnn-object-detection}/models-exps/MRCNN_SEMANTIC_FEATURES_VOC2007_2012  : multi-region with the semantic segmentation aware cnn featues recognition model.			 
+	+ {path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007/ : bounding box regression model.
 
 For running experiments on PASCAL VOC2007 or VOC2012 datasets then:
 
 10. Place the VOCdevkit of VOC2007 on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007 
 11. Place the VOCdevkit of VOC2012 on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit and its data on {path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012
-
-*###########################################################################*
 
 ### Demos:
 1. `"{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m"`  
@@ -90,8 +80,6 @@ It detects objects in an image using the multi-region with the semantic segmenta
 It detects objects in an image using the multi-region with the semantic segmentation-aware CNN features recognition model (sections 3 and 4 of the technical report) and the iterative localization scheme (section 5 of the technical report). 
 
 To run the above demos you will require a GPU with at least 12 Gbytes of memory
-
-*###########################################################################*
 
 ### Testing the pre-trained models on VOC2007 test set:
 
@@ -111,5 +99,3 @@ To run the above demos you will require a GPU with at least 12 Gbytes of memory
 	It applies the detection pipeline on the images of VOC2007 test set. By default, this script uses the edge box proposals as input to the detection pipeline.
  
 The above script can run on a GPU with at least 6 Gbytes of memory
-
-*###########################################################################*
