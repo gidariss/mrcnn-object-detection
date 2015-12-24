@@ -57,7 +57,7 @@ net_files_dir = fullfile(pwd,'data','vgg_pretrained_models');
 % path to the defintion file of the activation maps module
 model_obj_rec.act_net_def_file     = fullfile( net_files_dir,'vgg16_conv5_deploy.prototxt');
 % path to the weights file of the activation maps module
-model_obj_rec.act_net_weights_file = {fullfile(net_files_dir,'VGG_ILSVRC_16_layers.caffemodel')};
+model_obj_rec.act_net_weights_file = {fullfile(net_files_dir,'VGG_ILSVRC_16_Convolutional_Layers.caffemodel')};
 assert(exist(net_files_dir,'dir')>0);
 assert(exist(model_obj_rec.act_net_def_file ,'file')>0);
 assert(exist(model_obj_rec.act_net_weights_file{1},'file')>0);
