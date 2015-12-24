@@ -47,7 +47,7 @@ Data:
 It contains:
     1. the VGG16-Net pre-trained on ImageNet model (weights + definition files)   
     2. the Semantic Segmentation Awarce activations maps module (see section 4 of technical report) pre-trained on VOC2007 (weights + defintion files)  
-    3. Some other necessary configuration files  
+    3. some other necessary configuration files  
 5.  open matlab from the directory `{path-to-mrcnn-object-detection}/`
 6.  Edit the startup.m script by setting the installation directories paths of Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search to the proper variables (see startup.m).
 7.  Run startup.m  
