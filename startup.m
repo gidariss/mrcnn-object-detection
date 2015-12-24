@@ -50,5 +50,6 @@ addpath(genpath(caffe_path));
 mkdir_if_missing(fullfile(curdir, 'models-exps'));
 mkdir_if_missing(fullfile(curdir, 'feat_cache'));
 mkdir_if_missing(fullfile(curdir, 'data'));
+mkdir_if_missing(fullfile(curdir, 'bin'));
 
 end
