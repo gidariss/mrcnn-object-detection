@@ -40,7 +40,7 @@ Data:
 ### Installation:
 
 1. Install CAFFE https://github.com/BVLC/caffe
-2. Place a soft link of caffe directory on `{path-to-mrcnn-object-detection}/external/caffe` 
+2. Place a soft link of caffe installation directory on `{path-to-mrcnn-object-detection}/external/caffe` 
 3. Place a soft link of the edge boxes installation directory on `{path-to-mrcnn-object-detection}/external/edges`
 4. Downlaod the archive file https://drive.google.com/file/d/0BwxkAdGoNzNTaVl3ZF9CYndIbFE/view?usp=sharing and then   unzip and untar it in the following location: 
 	`{path-to-mrcnn-object-detection}/data/vgg_pretrained_models`
@@ -52,17 +52,23 @@ It contains:
 6.  Edit the startup.m script by setting the installation directories paths of Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search to the proper variables (see startup.m).
 7.  Run startup.m  
 
-To use the pre-trained object detection models 
+To run experiments on PASCAL VOC2007 or/and PASCAL VOC2012 datasets you need to:
 
-9. Place the pre-trained models on the following directories:  
-	+ `{path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012`  : multi-region recognition model.
-	+ `{path-to-mrcnn-object-detection}/models-exps/MRCNN_SEMANTIC_FEATURES_VOC2007_2012`  : multi-region with the semantic segmentation aware cnn featues recognition model.			 
-	+ `{path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007` : bounding box regression model.
+1. Place the VOCdevkit of VOC2007 on `{path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit` and its data on `{path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007` 
+2. Place the VOCdevkit of VOC2012 on `{path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit` and its data on `{path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012`
 
-For running experiments on PASCAL VOC2007 or VOC2012 datasets then:
+### Download and use the pre-trained object detection models
 
-10. Place the VOCdevkit of VOC2007 on `{path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit` and its data on `{path-to-mrcnn-object-detection}/datasets/VOC2007/VOCdevkit/VOC2007` 
-11. Place the VOCdevkit of VOC2012 on `{path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit` and its data on `{path-to-mrcnn-object-detection}/datasets/VOC2012/VOCdevkit/VOC2012`
+1. The multi-region CNN recognition model (section 3 of the technical report). Dowload the archive file of the model from https://drive.google.com/file/d/0BwxkAdGoNzNTaTNQR3pJcVU4WDg/view?usp=sharing and then untar and unzip it on the following location:  
+    `{path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012`  
+2. The multi-region with the semantic segmentation aware featues CNN recognition model (sections 3 & 4 of the technical report). Dowload the archive file of the model from https://drive.google.com/file/d/0BwxkAdGoNzNTNVRrZzdlMEtLMjA/view?usp=sharing and then untar and unzip it on the following location:  
+    `{path-to-mrcnn-object-detection}/models-exps/MRCNN_SEMANTIC_FEATURES_VOC2007_2012`  
+The above directory does not contain the weight files of the multi-region cnn model. Copy them from `{path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012` by running the following command on linux command line:  
+`cp {path-to-mrcnn-object-detection}/models-exps/MRCNN_VOC2007_2012/*.caffemodel {path-to-mrcnn-object-detection}/models-exps/MRCNN_SEMANTIC_FEATURES_VOC2007_2012/`
+3. The CNN-based bounding box regression model (section 5 of the technical report).  Dowload the archive file of the model from https://drive.google.com/file/d/0BwxkAdGoNzNTTWtvZTRNMWtwemM/view?usp=sharing and then untar and unzip it on the following location:  
+    `{path-to-mrcnn-object-detection}/models-exps/vgg_bbox_regression_R0013_voc2012_2007`
+
+All of the above models were trained on the union of VOC2007 train+val plus VOC2012 train+val datasets
 
 ### Demos:
 1. `"{path-to-mrcnn-object-detection}/code/example/demo_MRCNN_detection.m"`  
@@ -84,7 +90,6 @@ To run the above demos you will require a GPU with at least 12 Gbytes of memory
 	+ `script_test_object_detection_iter_loc('MRCNN_VOC2007_2012', 'vgg_bbox_regression_R0013_voc2012_2007', 'gpu_id', 1, 'image_set_test', 'test', 'voc_year_test','2007');`  
 	It applies the detection pipeline on the images of VOC2007 test set. By default, this script uses the edge box proposals as input to the detection pipeline.   
 
- 
 2. Test the multi-region with the semantic segmentation aware cnn features recognition model coupled with the iterative bounding box localization module on the VOC2007 test set by running:   
 	+ `script_extract_vgg16_conv_features('test', '2007', 'gpu_id', 1);`  
 	It pre-caches the VGG16 conv5 feature maps for the scales 480, 576, 688, 874, and 1200 (see activation maps in section 3 of the technical report).

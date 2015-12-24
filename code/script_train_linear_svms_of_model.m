@@ -16,7 +16,7 @@ opts = ip.Results;
 
 gpu_id                 = opts.gpu_id;
 
-full_model_dir         = fullfile(pwd, 'models-exps', model_dir_name);
+full_model_dir         = fullfile('./', 'models-exps', model_dir_name);
 full_model_path        = fullfile(full_model_dir, opts.model_mat_name);
 assert(exist(full_model_dir,'dir')>0);
 assert(exist(full_model_path, 'file')>0);
@@ -28,12 +28,10 @@ voc_year_train         = opts.voc_year_train;
 image_set_train        = opts.image_set_train;
 proposals_method_train = opts.proposals_method_train; 
 
-
 svm_C                  = opts.svm_C;
 %**************************************************************************
 
 %*************************** LOAD DATASET *********************************
-
 image_db_train = load_image_dataset(...
     'image_set', image_set_train, ...
     'voc_year', voc_year_train, ...
@@ -49,36 +47,37 @@ image_set_name_train   = image_db_train.image_set_name;
 
 experiment_name        = sprintf('exp_train_svm_%s', proposals_suffix_train);
 
-cache_directory    = fullfile(full_model_dir, 'cache_dir');
+cache_directory    = fullfile('./', 'cache_dir');
 mkdir_if_missing(cache_directory);
 experiment_dir     = fullfile(cache_directory, [image_set_name_train, sprintf('/%s/',experiment_name)]);
 mkdir_if_missing(experiment_dir);
+model_obj_rec.cache_dir  = experiment_dir;
 %**************************************************************************
 
 %***************************** LOAD MODEL *********************************
 caffe_set_device( gpu_id );
 caffe.reset_all();
-
+curr_dir = pwd;
+cd(full_model_dir)
 model_obj_rec.net = caffe_load_model( model_obj_rec.net_def_file,  model_obj_rec.net_weights_file);
 %**************************************************************************
-
 %*****************************  TRAIN SVMS ********************************
-model_obj_rec.cache_dir  = experiment_dir;
 svm_weights_file = train_detection_svm_with_hard_mining( ...
    model_obj_rec, image_paths_train, feature_paths_train, all_bbox_gt_train, ...
    all_regions_train, 'exp_dir', experiment_dir, 'train_classes', ...
    model_obj_rec.classes, 'svm_C', svm_C);
 caffe.reset_all();
+cd(curr_dir);
 model_obj_rec = rmfield(model_obj_rec,'net');
 update_model_with_svm_weights(full_model_path, model_obj_rec, svm_weights_file, opts.svm_layer_name, svm_C);
 %**************************************************************************
 end
 
-
 function model = load_model(filename)
 ld = load(filename, 'model');
 model = ld.model; 
 end
+
 function update_model_with_svm_weights(filename, model, svm_weights_file, svm_layer_name, svm_C)
 model.svm_weights_file = svm_weights_file;
 

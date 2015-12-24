@@ -481,8 +481,8 @@ for hard_epoch = 1:opts.max_epochs
     filepath_model_per_epoch{hard_epoch}       = filepath_model;
     filepath_model_cache_per_epoch{hard_epoch} = filepath_model_cache;
 end
-opts.model_directories_per_epoch = model_directories_per_epoch;
-opts.filepath_model_per_epoch = filepath_model_per_epoch;
+opts.model_directories_per_epoch    = model_directories_per_epoch;
+opts.filepath_model_per_epoch       = filepath_model_per_epoch;
 opts.filepath_model_cache_per_epoch = filepath_model_cache_per_epoch;
 
 end
