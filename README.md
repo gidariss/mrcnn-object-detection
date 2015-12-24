@@ -45,7 +45,7 @@ Data:
 4. Downlaod the archive file:  
    https://drive.google.com/file/d/0BwxkAdGoNzNTaVl3ZF9CYndIbFE/view?usp=sharing  
    that contains:
-    1. the VGG16 pre-trained on ImageNet model and definition files  
+    1. the VGG16-Net pre-trained on ImageNet model (weights + definition files)   
     2. the Semantic Segmentation Awarce activations maps module (see section 4 of technical report) pre-trained on VOC2007 (weights + defintion files)  
     3. Some other necessary configuration files  
 4. Place the VGG16 model pre-trained on ImageNet for the Image Classification task on:
