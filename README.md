@@ -49,7 +49,7 @@ It contains:
     2. the Semantic Segmentation Awarce activations maps module (see section 4 of technical report) pre-trained on VOC2007 (weights + defintion files)  
     3. some other necessary configuration files  
 5.  open matlab from the directory `{path-to-mrcnn-object-detection}/`
-6.  Edit the startup.m script by setting the installation directories paths of Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search to the proper variables (see startup.m) and the run the `startup.m` script from matlab command line  
+6.  Edit the `startup.m` script by setting the installation directory paths of 1) Edge Boxes, 2) Piotr's image processing MATLAB toolbox, and 3) Selective Search to the proper variables (see `startup.m`). After having set the paths run the `startup.m` script from matlab command line  
 8.  Run the `mrcnn_build.m` script on matlab command line
 
 To run experiments on PASCAL VOC2007 or/and PASCAL VOC2012 datasets you need to:
