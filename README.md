@@ -42,12 +42,12 @@ Data:
 1. Install CAFFE https://github.com/BVLC/caffe
 2. Place a soft link of caffe directory on `{path-to-mrcnn-object-detection}/external/caffe` 
 3. Place a soft link of the edge boxes installation directory on `{path-to-mrcnn-object-detection}/external/edges`
-4. Downlaod the archive file https://drive.google.com/file/d/0BwxkAdGoNzNTaVl3ZF9CYndIbFE/view?usp=sharing that contains:
+4. Downlaod the archive file https://drive.google.com/file/d/0BwxkAdGoNzNTaVl3ZF9CYndIbFE/view?usp=sharing and then   unzip and untar it in the following location: 
+	`{path-to-mrcnn-object-detection}/data/vgg_pretrained_models`
+It contains:
     1. the VGG16-Net pre-trained on ImageNet model (weights + definition files)   
     2. the Semantic Segmentation Awarce activations maps module (see section 4 of technical report) pre-trained on VOC2007 (weights + defintion files)  
     3. Some other necessary configuration files  
-   Unzip and untar the file in the following location:  
-	`{path-to-mrcnn-object-detection}/data/vgg_pretrained_models`
 5.  open matlab from the directory `{path-to-mrcnn-object-detection}/`
 6.  Edit the startup.m script by setting the installation directories paths of Edge Boxes, Piotr's image processing MATLAB toolbox, and Selective Search to the proper variables (see startup.m).
 7.  Run startup.m  
