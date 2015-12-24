@@ -43,7 +43,7 @@ Data:
 2. Place a soft link of caffe directory on `{path-to-mrcnn-object-detection}/external/caffe` 
 3. Place a soft link of the edge boxes installation directory on `{path-to-mrcnn-object-detection}/external/edges`
 4. Downlaod the archive file:  
-   `https://drive.google.com/file/d/0BwxkAdGoNzNTaVl3ZF9CYndIbFE/view?usp=sharing`  
+   https://drive.google.com/file/d/0BwxkAdGoNzNTaVl3ZF9CYndIbFE/view?usp=sharing  
    that contains:
     1. the VGG16 pre-trained on ImageNet model and definition files  
     2. the Semantic Segmentation Awarce activations maps module (see section 4 of technical report) pre-trained on VOC2007 (weights + defintion files)  
