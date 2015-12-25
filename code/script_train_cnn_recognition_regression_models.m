@@ -48,11 +48,13 @@ script_extract_sem_seg_aware_features('trainval', '2012', 'gpu_id',1);
 
 % train the region adaptation module for the semantic segmentation aware
 % CNN features
-% TODO
+script_train_net_bbox_rec_sem_seg_aware_pascal(...
+    'vgg_RSemSegAware_voc2012_2007_EB_ZP','gpu_id',1,...
+    'scale_inner',0.0,'scale_outer',1.5);
 
 % assemble the region adaptation modules of the multi-region with the
 % semantic segmentation aware features CNN recognition model
-% TODO 
+script_create_MRCNN_SCNN_VOC2007_2012();
 
 % train class-specific linear svm with hard negative mining on top of the
 % candidate box representations that the multi-region cnn model yields.
@@ -61,10 +63,60 @@ script_train_linear_svms_of_model('MRCNN_SEMANTIC_FEATURES_VOC2007_2012','gpu_id
 
 %************ TRAIN THE CNN-BASED BOUNDING BOX REGRESSION MODEL ***********
 
-% train the CNN-based bounding box regression model
+% pre-cache the activation maps of PASCAL images that will be used for
+% training
+% script_extract_vgg16_conv_features('trainval', '2007', 'gpu_id',1,'use_flips', true);
+% script_extract_vgg16_conv_features('trainval', '2012', 'gpu_id',1,'use_flips', true);
 
+% train the CNN-based bounding box regression model
+script_train_net_bbox_reg_pascal('vgg_bbox_regression_R0013_voc2012_2007',...
+    'scale_inner',0.0,'scale_outer',1.3,'gpu_id',1);
+%**************************************************************************
+
+%********************* TRAIN THE BASELINE MODEL ***************************
+% pre-cache the activation maps of PASCAL images that will be used for
+% training
+script_extract_vgg16_conv_features('trainval', '2007', 'gpu_id',1,'use_flips', true);
+script_extract_vgg16_conv_features('trainval', '2012', 'gpu_id',1,'use_flips', true);
+
+% 1) train the original candidate box region adaptation module (Firure 3.a  of technical report)
+script_train_net_bbox_rec_pascal('vgg_R0010_voc2012_2007_EB_ZP',...
+     'gpu_id', 1, 'scale_inner',0,'scale_outer',1.0);
+
+% train class-specific linear svm with hard negative mining on top of the
+% candidate box representations that the baseline* model yields.
+script_train_linear_svms_of_model('vgg_R0010_voc2012_2007_EB_ZP','gpu_id',1);
 %**************************************************************************
 
 %****************** TEST THE DETECTION MODELS ON PASCAL *******************
+% To test the multi-region recognition cnn model with the iterative 
+% localization scheme on voc 2007 test set:
+% 1) pre-cache the activation maps
+script_extract_vgg16_conv_features('test', '2007', 'gpu_id',1);
+% 2) run the detection pipeline
+script_test_object_detection_iter_loc('MRCNN_VOC2007_2012',...
+    'vgg_bbox_regression_R0013_voc2012_2007', 'gpu_id', 1, ...
+    'image_set_test', 'test', 'voc_year_test','2007');
+
+% To test the multi-region with the semantic segmentation aware features 
+% cnn recognition model with the iterative localization scheme on voc 2007
+% test set:
+% 1) pre-cache the activation maps
+script_extract_vgg16_conv_features('test', '2007', 'gpu_id',1);
+script_extract_sem_seg_aware_features('test', '2007', 'gpu_id',1);
+% 2) run the detection pipeline
+script_test_object_detection_iter_loc('MRCNN_SEMANTIC_FEATURES_VOC2007_2012',...
+    'vgg_bbox_regression_R0013_voc2012_2007', 'gpu_id', 1, ...
+    'image_set_test', 'test', 'voc_year_test','2007');
+
+
+% To test the basel*e recognition cnn model with the iterative 
+% localization scheme on voc 2007 test set:
+% 1) pre-cache the activation maps
+script_extract_vgg16_conv_features('test', '2007', 'gpu_id',1);
+% 2) run the detection pipeline
+script_test_object_detection_iter_loc('vgg_R0010_voc2012_2007_EB_ZP',...
+    'vgg_bbox_regression_R0013_voc2012_2007', 'gpu_id', 1, ...
+    'image_set_test', 'test', 'voc_year_test','2007');
 
 %**************************************************************************

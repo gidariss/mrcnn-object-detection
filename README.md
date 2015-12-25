@@ -98,4 +98,8 @@ To run the above demos you will require a GPU with at least 12 Gbytes of memory
 	+ `script_test_object_detection_iter_loc('MRCNN_SEMANTIC_FEATURES_VOC2007_2012','vgg_bbox_regression_R0013_voc2012_2007', 'gpu_id', 1, 'image_set_test', 'test', 'voc_year_test','2007');`  
 	It applies the detection pipeline on the images of VOC2007 test set. By default, this script uses the edge box proposals as input to the detection pipeline.
  
-The above script can run on a GPU with at least 6 Gbytes of memory
+To run the above scripts you will require a GPU with at least 6 Gbytes of memory
+
+### Train the recognicion/regression models on PASCAL VOC 
+
+Read the script 

@@ -137,7 +137,7 @@ opts.vgg_pool_params_def    = fullfile(pwd,'data/vgg_pretrained_models/vgg_seman
 % initialized randomly
 opts.net_file               = fullfile(pwd,'data/vgg_pretrained_models/VGG_ILSVRC_16_Fully_Connected_Layers.caffemodel');
 % the solver definition file that will be used for training
-opts.finetune_net_def_file  = 'Semantic_segmentation_aware_net_pascal_solver.prototxt';
+opts.finetune_net_def_file  = 'Semantic_segmentation_aware_region_pascal_solver.prototxt';
 opts.finetune_net_def_file  = fullfile(pwd, 'model-defs', opts.finetune_net_def_file);
 
 % location of the model directory where the results of training the region
@@ -243,6 +243,13 @@ finetuned_model_path = ['.',filesep,filename,ext];
 
 feat_blob_name         = {'fc1'};
 
+% prepare / save model that uses the softmax layer for scoring the bounding
+% box proposals
+
+deploy_def_file_src  = fullfile(pwd, 'model-defs', 'Semantic_segmentation_aware_region_deploy_softmax.prototxt');
+deploy_def_file_dst  = fullfile(opts.finetune_rst_dir, 'deploy_softmax.prototxt');
+copyfile(deploy_def_file_src,deploy_def_file_dst);
+
 model                  = struct;
 model.net_def_file     = './deploy_softmax.prototxt';
 model.net_weights_file = {finetuned_model_path};
@@ -250,9 +257,17 @@ model.pooler           = pooler;
 model.feat_blob_name   = feat_blob_name;
 model.feat_cache       = opts.feat_cache_names;
 model.classes          = classes;
-model.score_out_blob   = 'fc2_pascal';
+model.score_out_blob   = 'pascal_softmax';
 model_filename         = fullfile(opts.finetune_rst_dir, 'detection_model_softmax.mat');
 save(model_filename, 'model');
+
+
+% prepare / save model that uses class-specific linear svms for scoring the
+% bounding box proposals
+
+deploy_def_file_src  = fullfile(pwd, 'model-defs', 'Semantic_segmentation_aware_region_deploy_svm.prototxt');
+deploy_def_file_dst  = fullfile(opts.finetune_rst_dir, 'deploy_svm.prototxt');
+copyfile(deploy_def_file_src,deploy_def_file_dst);
 
 model                  = struct;
 model.net_def_file     = './deploy_svm.prototxt';
@@ -262,6 +277,7 @@ model.feat_blob_name   = feat_blob_name;
 model.feat_cache       = opts.feat_cache_names;
 model.classes          = classes;
 model.score_out_blob   = 'pascal_svm';
+model.svm_layer_name   = 'pascal_svm';
 model_filename         = fullfile(opts.finetune_rst_dir, 'detection_model_svm.mat');
 save(model_filename, 'model');
 end

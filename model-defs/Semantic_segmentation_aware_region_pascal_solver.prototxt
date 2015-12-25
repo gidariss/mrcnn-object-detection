@@ -1,4 +1,4 @@
-net: "Semantic_segmentation_aware_net_pascal_train_test.prototxt"
+net: "Semantic_segmentation_aware_region_pascal_train_test.prototxt"
 test_iter: 1
 weight_decay: 0.0005
 test_interval: 2000
