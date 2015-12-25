@@ -102,4 +102,5 @@ To run the above scripts you will require a GPU with at least 6 Gbytes of memory
 
 ### Train the recognicion/regression models on PASCAL VOC 
 
-Read the script 
+See the script `{path-to-mrcnn-object-detection}/code/script_train_cnn_recognition_regression_models.m`  
+
