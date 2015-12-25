@@ -48,9 +48,7 @@ image_set_name_train   = image_db_train.image_set_name;
 experiment_name        = sprintf('exp_train_svm_%s', proposals_suffix_train);
 
 cache_directory    = fullfile('./', 'cache_dir');
-mkdir_if_missing(cache_directory);
 experiment_dir     = fullfile(cache_directory, [image_set_name_train, sprintf('/%s/',experiment_name)]);
-mkdir_if_missing(experiment_dir);
 model_obj_rec.cache_dir  = experiment_dir;
 %**************************************************************************
 
@@ -62,6 +60,9 @@ cd(full_model_dir)
 model_obj_rec.net = caffe_load_model( model_obj_rec.net_def_file,  model_obj_rec.net_weights_file);
 %**************************************************************************
 %*****************************  TRAIN SVMS ********************************
+mkdir_if_missing(cache_directory);
+mkdir_if_missing(experiment_dir);
+
 svm_weights_file = train_detection_svm_with_hard_mining( ...
    model_obj_rec, image_paths_train, feature_paths_train, all_bbox_gt_train, ...
    all_regions_train, 'exp_dir', experiment_dir, 'train_classes', ...

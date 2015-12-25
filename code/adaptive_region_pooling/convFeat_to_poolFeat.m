@@ -106,7 +106,7 @@ boxes_inner = scale_bboxes(boxes, region_params.scale_inner);
 regions = single([boxes_outer,boxes_inner]);
 %**************************************************************************
 
-%************ PROJECT EACH REGION TO ONE OF SCALE OF THE IMAGE ************
+%************ PROJECT EACH REGION TO ONE OF THE IMAGE SCALES **************
 expected_scale = spm_expected_scale(min_img_sz, boxes_outer, region_params);
 
 [~, best_scale_ids] = min(abs(bsxfun(@minus, available_scales, expected_scale(:))), [], 2);   

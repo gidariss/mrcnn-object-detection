@@ -31,7 +31,6 @@ fprintf('Loading detection models... '); th = tic;
 
 % set the path of the bounding box recognition model for object detection
 model_rec_dir_name  = 'MRCNN_VOC2007_2012'; % model's directory name 
-% model_rec_dir_name  = 'vgg_R0010_voc2012_2007'; % model's directory name 
 
 full_model_rec_dir  = fullfile(pwd, 'models-exps', model_rec_dir_name); % full path to the model's directory
 use_detection_svms  = true;
