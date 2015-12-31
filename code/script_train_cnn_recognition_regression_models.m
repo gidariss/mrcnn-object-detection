@@ -1,3 +1,6 @@
+% In order to run the scripts that are included in this file you will need 
+% a GPU with at least 6 Gbytes of memory.
+% 
 %***************** TRAIN THE MULTI-REGION CNN MODEL **********************
 % Train each region adaptation module of the multi-region CNN recognition
 % model on the union of PASCAL VOC 2007 train+val and VOC2012 train+val
