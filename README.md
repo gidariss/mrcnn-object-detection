@@ -27,7 +27,7 @@ This code is released under the MIT License (refer to the LICENSE file for detai
 
 Software:  
 1. MATLAB (tested with R2014b)  
-2. Caffe: https://github.com/BVLC/caffe  (built with CuDNN)
+2. Caffe: https://github.com/BVLC/caffe  (built with CuDNN)  
 3. LIBLINEAR (only for training)    
 4. Edge Boxes code: https://github.com/pdollar/edges  
 5. Piotr's image processing MATLAB toolbox: http://vision.ucsd.edu/~pdollar/toolbox/doc/index.html  
@@ -39,7 +39,7 @@ Data:
 
 ### Installation:
 
-1. Install CAFFE https://github.com/BVLC/caffe  (with CuDNN)
+1. Install CAFFE https://github.com/BVLC/caffe  (with CuDNN)  
 2. Place a soft link of caffe installation directory on `{path-to-mrcnn-object-detection}/external/caffe` 
 3. Place a soft link of the edge boxes installation directory on `{path-to-mrcnn-object-detection}/external/edges`
 4. Downlaod the archive file https://drive.google.com/file/d/0BwxkAdGoNzNTaVl3ZF9CYndIbFE/view?usp=sharing and then   unzip and untar it in the following location: 
