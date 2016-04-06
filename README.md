@@ -14,11 +14,12 @@ This code implements the following ICCV2015 accepted paper:
 
 If you find this code useful in your research, please consider citing:  
 
-> @article{gidaris2015object,  
-  title={Object detection via a multi-region \& semantic segmentation-aware CNN model},  
+> @inproceedings{gidaris2015object,  
+  title={Object Detection via a Multi-Region and Semantic Segmentation-Aware CNN Model},  
   author={Gidaris, Spyros and Komodakis, Nikos},  
-  journal={arXiv preprint arXiv:1505.01749},  
-  year={2015}}
+  booktitle={Proceedings of the IEEE International Conference on Computer Vision},  
+  pages={1134--1142},  
+  year={2015}}  
 
 ### License:
 This code is released under the MIT License (refer to the LICENSE file for details).  
